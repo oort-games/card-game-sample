@@ -1,0 +1,21 @@
+using UnityEngine;
+
+public class SpellCard : Card
+{
+    public new SpellCardData Data => (SpellCardData)base.Data;
+
+    public SpellCard(SpellCardData data) : base(data) { }
+
+    protected override uint GetBaseCost() => Data.cost;
+
+    public override bool CanPlay(BattleContext context)
+    {
+        return context.Mana >= CurrentCost;
+    }
+
+    public override void Play(BattleContext context)
+    {
+        context.UseMana(CurrentCost);
+        context.SpellExecutor.Excute(this, context);
+    }
+}
