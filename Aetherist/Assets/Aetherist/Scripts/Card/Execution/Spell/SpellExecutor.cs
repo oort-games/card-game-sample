@@ -9,7 +9,7 @@ public class SpellExecutor
     {
         _actions = new()
         {
-            { SpellActionType.Attack, new AttackSpellAction() }
+            { SpellActionType.Attack, new SpellAttackAction() }
         };
     }
 

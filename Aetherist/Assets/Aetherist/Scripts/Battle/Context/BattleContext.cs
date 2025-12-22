@@ -9,6 +9,11 @@ public class BattleContext
 
     public void UseMana(uint amount)
     {
-        Mana = amount;
+        Mana -= amount;
+    }
+
+    public void DarwCards(int count)
+    {
+
     }
 }

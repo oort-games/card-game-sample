@@ -10,18 +10,18 @@ public class RelicExecutor
         _relics = relics;
     }
 
-    public void Trigger(RelicTriggerType trigger, BattleContext context)
+    public void Trigger(RelicTriggerContext context)
     {
         foreach (var relic in _relics)
         {
-            if (relic.Data.triggerType == trigger)
+            if (relic.Data.triggerType == context.TriggerType)
             {
                 Excute(relic, context);
             }
         }
     }
 
-    private void Excute(RelicCard card, BattleContext context)
+    private void Excute(RelicCard relic, RelicTriggerContext context)
     {
 
     }
