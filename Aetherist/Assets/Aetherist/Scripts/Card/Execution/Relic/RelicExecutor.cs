@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class RelicExecutor
 {
-    private readonly List<RelicCard> _relics;
+    List<RelicCard> _relics;
 
-    public RelicExecutor(List<RelicCard> relics)
+    public RelicExecutor()
     {
-        _relics = relics;
+        _relics = new();
     }
 
     public void Trigger(RelicTriggerContext context)
@@ -21,8 +21,8 @@ public class RelicExecutor
         }
     }
 
-    private void Excute(RelicCard relic, RelicTriggerContext context)
+    void Excute(RelicCard relic, RelicTriggerContext context)
     {
-
+        RelicEffectProcessor.Apply(relic, context);
     }
 }

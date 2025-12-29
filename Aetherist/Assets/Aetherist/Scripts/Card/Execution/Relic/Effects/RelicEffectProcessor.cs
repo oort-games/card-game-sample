@@ -3,7 +3,7 @@ using UnityEngine;
 
 public static class RelicEffectProcessor
 {
-    private static readonly Dictionary<RelicEffectType, IRelicEffectHandler> _handlers = new()
+    static readonly Dictionary<RelicEffectType, IRelicEffectHandler> _handlers = new()
     {
         { RelicEffectType.GainShield, new RelicGainShieldEffectHandler() },
         { RelicEffectType.ModifySpellCost, new RelicModifySpellCostEffectHandler() },

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SpellDamageEffectHandler : ISpellEffectHandler
+public class SpellHealEffectHandler : ISpellEffectHandler
 {
     public void Apply(SpellEffectData effect, SpellCard card, BattleContext context)
     {
@@ -8,7 +8,7 @@ public class SpellDamageEffectHandler : ISpellEffectHandler
 
         foreach (var target in targets)
         {
-            target.TakeDamage(effect.value);
+            target.Heal(effect.value);
         }
     }
 }

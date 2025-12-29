@@ -22,5 +22,5 @@ public class SpellCardData : CardData
 public class SpellEffectData
 {
     public SpellEffectType effectType;
-    public int value;
+    public uint value;
 }

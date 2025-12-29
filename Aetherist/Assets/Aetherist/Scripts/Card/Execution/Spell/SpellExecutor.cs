@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SpellExecutor
 {
-    private readonly Dictionary<SpellActionType, ISpellAction> _actions;
+    readonly Dictionary<SpellActionType, ISpellAction> _actions;
 
     public SpellExecutor()
     {
@@ -17,6 +17,7 @@ public class SpellExecutor
     {
         if (_actions.TryGetValue(card.Data.actionType, out var action))
         {
+            Debug.Log($"Excute SpellCard: {card.Data.displayName} - {card.Data.actionType}");
             action.Excute(card, context);
         }
         else
