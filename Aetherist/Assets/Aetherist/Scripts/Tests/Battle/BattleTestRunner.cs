@@ -4,6 +4,7 @@ using UnityEngine;
 public class BattleTestRunner : MonoBehaviour
 {
     [SerializeField] SpellCardData testSpellCard;
+    [SerializeField] RelicCardData testRelicCard;
 
     void Start()
     {
@@ -21,11 +22,18 @@ public class BattleTestRunner : MonoBehaviour
 
         context.SetupBattle(3, player, enemies);
 
-        var card = new SpellCard(testSpellCard);
+        var relic = new RelicCard(testRelicCard);
+        context.RelicExecutor.AddRelic(relic);
 
-        if (card.CanPlay(context))
+        Debug.Log("[Battle] Start | Test");
+
+        context.RelicExecutor.Trigger(new RelicTriggerContext(RelicTriggerType.OnBattleStart, context));
+
+        var spell = new SpellCard(testSpellCard);
+
+        if (spell.CanPlay(context))
         {
-            card.Play(context);
+            spell.Play(context);
         }
     }
 }

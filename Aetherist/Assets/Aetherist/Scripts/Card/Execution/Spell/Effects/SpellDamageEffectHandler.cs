@@ -10,5 +10,7 @@ public class SpellDamageEffectHandler : ISpellEffectHandler
         {
             target.TakeDamage(effect.value);
         }
+
+        context.CleanupDeadEnemies();
     }
 }

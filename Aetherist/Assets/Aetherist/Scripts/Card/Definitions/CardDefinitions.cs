@@ -2,6 +2,7 @@
 public enum CardType
 {
     None = 0,
+
     Spell,
     Relic,
     Arcana,
@@ -10,6 +11,7 @@ public enum CardType
 public enum CardElement
 {
     None = 0,
+
     Fire,
     Water,
     Earth,
@@ -30,10 +32,10 @@ public enum CardRarity
 public enum CardTarget
 {
     None = 0,
+
     Self,
     SingleEnemy,
     AllEnemies,
-    FrontEnemy,
     LowestHPEnemy,
 }
 #endregion
@@ -42,6 +44,7 @@ public enum CardTarget
 public enum SpellActionType
 {
     None = 0,
+
     Attack,
     Defense,
     Buff,
@@ -52,6 +55,8 @@ public enum SpellActionType
 
 public enum SpellEffectType
 {
+    None = 0,
+
     Damage,
     Shield,
     Heal,
@@ -65,7 +70,8 @@ public enum SpellEffectType
 #region Relic
 public enum RelicTriggerType
 {
-    None,
+    None = 0,
+
     OnBattleStart,
     OnTurnStart,
     OnSpellUsed,
@@ -76,7 +82,8 @@ public enum RelicTriggerType
 public enum RelicEffectType
 {
     None = 0,
-
+    
+    GainMana,
     GainShield,
     Heal,
     IncreaseDamage,

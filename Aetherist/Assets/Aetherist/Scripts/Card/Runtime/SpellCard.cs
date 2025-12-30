@@ -15,6 +15,7 @@ public class SpellCard : Card
 
     public override void Play(BattleContext context)
     {
+        Debug.Log($"[Spell] Play | {Data.displayName} ({Data.actionType})");
         context.UseMana(CurrentCost);
         context.SpellExecutor.Excute(this, context);
     }

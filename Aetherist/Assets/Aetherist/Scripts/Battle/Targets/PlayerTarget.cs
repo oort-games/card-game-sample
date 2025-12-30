@@ -14,7 +14,7 @@ public class PlayerTarget : IBattleTarget
         uint before = _hp;
         _hp = amount >= _hp ? 0 : _hp - amount;
 
-        Debug.Log($"HP {before} -> {_hp} (damage {amount})");
+        Debug.Log($"[Damage] Player | {amount} ({before} -> {_hp})");
     }
 
     public void Heal(uint amount)

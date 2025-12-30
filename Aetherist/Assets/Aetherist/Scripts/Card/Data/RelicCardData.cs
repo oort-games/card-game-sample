@@ -20,5 +20,5 @@ public class RelicCardData : CardData
 public class RelicEffectData
 {
     public RelicEffectType effectType;
-    public int value;
+    public uint value;
 }

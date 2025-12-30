@@ -464,6 +464,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testSpellCard: {fileID: 11400000, guid: 82df26fadf6438b41bf1fa6144198d61, type: 2}
+  testRelicCard: {fileID: 11400000, guid: 206f4b0a2f583c14391357d13b20cff8, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ public static class RelicEffectProcessor
 {
     static readonly Dictionary<RelicEffectType, IRelicEffectHandler> _handlers = new()
     {
+        { RelicEffectType.GainMana, new RelicGainManaEffectHandler() },
         { RelicEffectType.GainShield, new RelicGainShieldEffectHandler() },
         { RelicEffectType.ModifySpellCost, new RelicModifySpellCostEffectHandler() },
     };

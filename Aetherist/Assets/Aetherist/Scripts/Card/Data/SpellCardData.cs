@@ -18,7 +18,7 @@ public class SpellCardData : CardData
     public SpellEffectData[] effects;
 }
 
-    [Serializable]
+[Serializable]
 public class SpellEffectData
 {
     public SpellEffectType effectType;

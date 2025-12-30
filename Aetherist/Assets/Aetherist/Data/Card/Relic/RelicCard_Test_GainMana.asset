@@ -9,19 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 655c1128a5c9bdd4eb82d157e82a1768, type: 3}
-  m_Name: SpellCard_Test_Fireball
+  m_Script: {fileID: 11500000, guid: e61123956c66f884fa56d5539abac68b, type: 3}
+  m_Name: RelicCard_Test_GainMana
   m_EditorClassIdentifier: 
   id: 1
-  displayName: Test_Fireball
-  description: Test_Fireball Desc
-  icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  type: 1
+  displayName: Test_GainMana
+  description: Test_GainMana Desc
+  icon: {fileID: 0}
+  type: 2
   rarity: 0
-  actionType: 1
-  element: 1
-  target: 2
-  cost: 1
+  triggerType: 1
   effects:
   - effectType: 1
     value: 5
+  isUnique: 1

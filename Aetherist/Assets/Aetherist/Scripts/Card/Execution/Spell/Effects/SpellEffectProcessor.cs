@@ -14,7 +14,6 @@ public static class SpellEffectProcessor
     {
         if (_handlers.TryGetValue(effect.effectType, out var handler))
         {
-            Debug.Log($"Apply SpellEffect: {card.Data.displayName} - {effect.effectType}");
             handler.Apply(effect, card, context);
         }
         else

@@ -8,7 +8,7 @@ public class RelicTriggerContext
     public SpellCard SpellCard { get; }
     public SpellActionType? SpellActionType { get; }
 
-    public RelicTriggerContext(RelicTriggerType triggerType, BattleContext battleContext, SpellCard spellCard)
+    public RelicTriggerContext(RelicTriggerType triggerType, BattleContext battleContext, SpellCard spellCard = null)
     {
         TriggerType = triggerType;
         BattleContext = battleContext;

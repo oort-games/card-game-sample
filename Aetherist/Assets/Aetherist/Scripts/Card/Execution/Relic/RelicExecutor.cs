@@ -10,6 +10,11 @@ public class RelicExecutor
         _relics = new();
     }
 
+    public void AddRelic(RelicCard relic)
+    {
+        _relics.Add(relic);
+    }
+
     public void Trigger(RelicTriggerContext context)
     {
         foreach (var relic in _relics)
@@ -23,6 +28,7 @@ public class RelicExecutor
 
     void Excute(RelicCard relic, RelicTriggerContext context)
     {
+        Debug.Log($"[Relic] Excute | {relic.Data.displayName} ({relic.Data.triggerType})");
         RelicEffectProcessor.Apply(relic, context);
     }
 }

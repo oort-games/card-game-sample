@@ -29,16 +29,36 @@ public class BattleContext
         _enemies.AddRange(enemies);
     }
 
+    #region Mana
     public void UseMana(uint amount)
     {
         var before = Mana;
         Mana -= amount;
-        Debug.Log($"Mana: {before} -> {Mana}");
+        Debug.Log($"[Mana] Use | {amount} ({before} -> {Mana})");
     }
+
+    public void AddMana(uint amount)
+    {
+        var before = Mana;
+        Mana += amount;
+        Debug.Log($"[Mana] Add | {amount} ({before} -> {Mana})");
+    }
+    #endregion
 
     public void DrawCards(uint count)
     {
 
+    }
+
+    public void CleanupDeadEnemies()
+    {
+        for (int i = 0; i < _enemies.Count; i++)
+        {
+            if (_enemies[i].IsDead)
+            {
+                _enemies.RemoveAt(i);
+            }
+        }
     }
 
     public void RemoveEnemy(EnemyTarget enemy)
