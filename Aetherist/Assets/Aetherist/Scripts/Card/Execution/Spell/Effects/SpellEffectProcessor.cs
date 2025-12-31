@@ -11,10 +11,13 @@ public static class SpellEffectProcessor
     };
 
     public static void Apply(SpellEffectData effect, SpellCard card, BattleContext context)
+        => Apply(effect, card, context, card.Data.target);
+
+    public static void Apply(SpellEffectData effect, SpellCard card, BattleContext context, CardTarget target)
     {
         if (_handlers.TryGetValue(effect.effectType, out var handler))
         {
-            handler.Apply(effect, card, context);
+            handler.Apply(effect, card, context, target);
         }
         else
         {

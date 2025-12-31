@@ -6,9 +6,12 @@ public class SpellAttackAction : ISpellAction
     {
         context.RelicExecutor.Trigger(new RelicTriggerContext(RelicTriggerType.OnSpellUsed, context, card));
 
-        foreach(var effect in card.Data.effects)
+        foreach (var effectGroup in card.Data.GetEffectGroups())
         {
-            SpellEffectProcessor.Apply(effect, card, context);
+            foreach (var effect in effectGroup.effects)
+            {
+                SpellEffectProcessor.Apply(effect, card, context, effectGroup.target);
+            }
         }
     }
 }
