@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class SpellDamageEffectHandler : ISpellEffectHandler
 {
-    public void Apply(SpellEffectData effect, SpellCard card, BattleContext context)
+    public void Apply(SpellEffectData effect, SpellCard card, BattleContext context, CardTarget target)
     {
-        var targets = context.TargetResolver.Resolve(card.Data.target, context);
+        var targets = context.TargetResolver.Resolve(target, context);
 
         foreach (var target in targets)
         {
