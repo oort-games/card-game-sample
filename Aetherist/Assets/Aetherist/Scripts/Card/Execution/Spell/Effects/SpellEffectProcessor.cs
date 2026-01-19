@@ -10,11 +10,11 @@ public static class SpellEffectProcessor
         { SpellEffectType.Heal, new SpellDrawEffectHandler() },
     };
 
-    public static void Apply(SpellEffectData effect, SpellCard card, BattleContext context)
+    public static void Apply(SpellEffectData effect, IBattleTarget target, SpellCard card, BattleContext context)
     {
         if (_handlers.TryGetValue(effect.effectType, out var handler))
         {
-            handler.Apply(effect, card, context);
+            handler.Apply(effect, target, card, context);
         }
         else
         {

@@ -9,7 +9,6 @@ public class SpellCardData : CardData
     [Header("Spell Info")]
     public SpellActionType actionType;
     public CardElement element;
-    public CardTarget target;
 
     [Header("Cost")]
     public uint cost = 1;
@@ -21,6 +20,7 @@ public class SpellCardData : CardData
 [Serializable]
 public class SpellEffectData
 {
+    public CardTarget target;
     public SpellEffectType effectType;
     public uint value;
 }

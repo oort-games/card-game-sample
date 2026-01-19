@@ -8,7 +8,12 @@ public class SpellAttackAction : ISpellAction
 
         foreach(var effect in card.Data.effects)
         {
-            SpellEffectProcessor.Apply(effect, card, context);
+            var targets = context.TargetResolver.Resolve(effect.target, context);
+
+            foreach (var target in targets)
+            {
+                SpellEffectProcessor.Apply(effect, target, card, context);
+            }
         }
     }
 }
