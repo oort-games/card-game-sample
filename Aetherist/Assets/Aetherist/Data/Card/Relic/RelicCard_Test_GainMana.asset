@@ -19,6 +19,12 @@ MonoBehaviour:
   type: 2
   rarity: 0
   triggerType: 1
+  conditions:
+  - conditionType: 0
+    comparison: 0
+    value: 0
+    element: 0
+    cardType: 0
   effects:
   - effectType: 1
     value: 5

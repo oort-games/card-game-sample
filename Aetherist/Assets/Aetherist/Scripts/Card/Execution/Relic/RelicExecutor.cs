@@ -15,14 +15,22 @@ public class RelicExecutor
         _relics.Add(relic);
     }
 
-    public void Trigger(RelicTriggerContext context)
+    public void Trigger(RelicTriggerType triggerType, BattleContext context, SpellCard card = null)
+    {
+        Trigger(new RelicTriggerContext(triggerType, context, card));
+    }
+
+    void Trigger(RelicTriggerContext context)
     {
         foreach (var relic in _relics)
         {
-            if (relic.Data.triggerType == context.TriggerType)
-            {
-                Excute(relic, context);
-            }
+            if (relic.Data.triggerType != context.TriggerType)
+                continue;
+
+            if (!RelicConditionEvaluator.CheckAll(relic.Data.conditions, context))
+                continue;
+
+            Excute(relic, context);
         }
     }
 

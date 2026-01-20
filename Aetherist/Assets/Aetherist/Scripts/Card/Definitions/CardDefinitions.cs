@@ -73,10 +73,14 @@ public enum RelicTriggerType
     None = 0,
 
     OnBattleStart,
+
     OnTurnStart,
-    OnSpellUsed,
-    OnElementChanged,
     OnTurnEnd,
+
+    OnSpellUsed, // 사용 선언
+    OnSpellResolved, // 효과 적용 완료
+
+    OnElementChanged,
 }
 
 public enum RelicEffectType
@@ -92,4 +96,17 @@ public enum RelicEffectType
     AddElement,
     RemoveElement,
 }
+
+public enum RelicConditionType
+{
+    HandCardCount, // 손에 들고 있는 카드 수
+    ManaRemaining, // 남아 있는 마나
+    ManaSpent, // 이번 턴에 사용한 마나 총량
+    SpellUsedCount, // 이번 턴에 사용한 스펠 횟수
+    DistinctElementUsed, // 이번 턴에 사용한 서로 다른 속성 개수
+    SpecificElementUsed, // 특정 속성 스펠 사용 횟수
+    PlayerHealthPercent, // 플레이어 체력 비율
+    EnemyCount, // 현재 살아있는 적 수
+}
 #endregion
+

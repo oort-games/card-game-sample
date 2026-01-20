@@ -27,7 +27,7 @@ public class BattleTestRunner : MonoBehaviour
 
         Debug.Log("[Battle] Start | Test");
 
-        context.RelicExecutor.Trigger(new RelicTriggerContext(RelicTriggerType.OnBattleStart, context));
+        context.RelicExecutor.Trigger(RelicTriggerType.OnBattleStart, context);
 
         var spell = new SpellCard(testSpellCard);
 

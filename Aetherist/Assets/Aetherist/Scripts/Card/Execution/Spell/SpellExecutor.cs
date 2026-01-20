@@ -17,7 +17,9 @@ public class SpellExecutor
     {
         if (_actions.TryGetValue(card.Data.actionType, out var action))
         {
+            context.RelicExecutor.Trigger(RelicTriggerType.OnSpellUsed, context, card);
             action.Excute(card, context);
+            context.RelicExecutor.Trigger(RelicTriggerType.OnSpellResolved, context, card);
         }
         else
         {

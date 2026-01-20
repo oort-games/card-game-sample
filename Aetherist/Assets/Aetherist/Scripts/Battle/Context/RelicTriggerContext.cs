@@ -8,11 +8,11 @@ public class RelicTriggerContext
     public SpellCard SpellCard { get; }
     public SpellActionType? SpellActionType { get; }
 
-    public RelicTriggerContext(RelicTriggerType triggerType, BattleContext battleContext, SpellCard spellCard = null)
+    public RelicTriggerContext(RelicTriggerType triggerType, BattleContext context, SpellCard card = null)
     {
         TriggerType = triggerType;
-        BattleContext = battleContext;
-        SpellCard = spellCard;
-        SpellActionType = spellCard?.Data.actionType;
+        BattleContext = context;
+        SpellCard = card;
+        SpellActionType = card?.Data.actionType;
     }
 }

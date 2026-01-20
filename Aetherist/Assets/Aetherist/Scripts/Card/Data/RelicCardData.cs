@@ -9,6 +9,9 @@ public class RelicCardData : CardData
     [Header("Relic Info")]
     public RelicTriggerType triggerType;
 
+    [Header("Conditions")]
+    public RelicConditionData[] conditions;
+
     [Header("Effect")]
     public RelicEffectData[] effects;
 
@@ -21,4 +24,19 @@ public class RelicEffectData
 {
     public RelicEffectType effectType;
     public uint value;
+}
+
+[Serializable]
+public class RelicConditionData
+{
+    [Header("Condition")]
+    public RelicConditionType conditionType;
+
+    [Header("Compare")]
+    public ComparisonType comparison;
+    public uint value;
+
+    [Header("Optional Params")]
+    public CardElement element;
+    public CardType cardType;
 }
