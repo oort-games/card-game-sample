@@ -99,7 +99,7 @@ public enum RelicEffectType
 
 public enum RelicConditionType
 {
-    HandCardCount, // 손에 들고 있는 카드 수
+    HandCardCount, // 손패 카드 수
     ManaRemaining, // 남아 있는 마나
     ManaSpent, // 이번 턴에 사용한 마나 총량
     SpellUsedCount, // 이번 턴에 사용한 스펠 횟수
@@ -107,6 +107,22 @@ public enum RelicConditionType
     SpecificElementUsed, // 특정 속성 스펠 사용 횟수
     PlayerHealthPercent, // 플레이어 체력 비율
     EnemyCount, // 현재 살아있는 적 수
+}
+#endregion
+
+#region
+public enum ArcanaEffectType
+{
+    None = 0,
+
+    IncreaseMaxMana, // 최대 마나 증가
+    GainManaEachTurn, // 턴 시작 시 추가 마나 획득
+    ReduceSpellCost, // 스펠 비용 감소
+
+    DuplicateFirstSpell, // 매 전투 첫 스펠을 한 번 더 발동
+
+    DrawExtraCardEachTurn, // 턴 시작 시 카드 추가 드로우
+    ModifyHandSizeLimit, // 최대 손패 크기 변경
 }
 #endregion
 

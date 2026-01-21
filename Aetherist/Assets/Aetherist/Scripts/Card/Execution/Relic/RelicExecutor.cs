@@ -15,9 +15,9 @@ public class RelicExecutor
         _relics.Add(relic);
     }
 
-    public void Trigger(RelicTriggerType triggerType, BattleContext context, SpellCard card = null)
+    public void Trigger(RelicTriggerType triggerType, BattleContext context, SpellCard spell = null)
     {
-        Trigger(new RelicTriggerContext(triggerType, context, card));
+        Trigger(new RelicTriggerContext(triggerType, context, spell));
     }
 
     void Trigger(RelicTriggerContext context)

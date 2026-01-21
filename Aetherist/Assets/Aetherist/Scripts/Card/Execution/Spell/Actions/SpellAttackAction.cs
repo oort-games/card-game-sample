@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class SpellAttackAction : ISpellAction
 {
-    public void Excute(SpellCard card, BattleContext context)
+    public void Excute(SpellCard spell, BattleContext context)
     {      
-        foreach(var effect in card.Data.effects)
+        foreach(var effect in spell.Data.effects)
         {
             var targets = context.TargetResolver.Resolve(effect.target, context);
 
             foreach (var target in targets)
             {
-                SpellEffectProcessor.Apply(effect, target, card, context);
+                SpellEffectProcessor.Apply(effect, target, spell, context);
             }
         }
     }

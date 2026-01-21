@@ -6,16 +6,16 @@ public class RelicCardData : CardData
 {
     protected override CardType FixedType => CardType.Relic;
 
-    [Header("Relic Info")]
+    [Header("Trigger")]
     public RelicTriggerType triggerType;
 
     [Header("Conditions")]
     public RelicConditionData[] conditions;
 
-    [Header("Effect")]
+    [Header("Effects")]
     public RelicEffectData[] effects;
 
-    [Header("Rule")]
+    [Header("Rules")]
     public bool isUnique = true;
 }
 

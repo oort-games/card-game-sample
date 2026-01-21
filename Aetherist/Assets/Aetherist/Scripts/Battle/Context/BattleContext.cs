@@ -3,15 +3,27 @@ using UnityEngine;
 
 public class BattleContext
 {
+    #region System
     public SpellExecutor SpellExecutor { get; }
     public RelicExecutor RelicExecutor { get; }
     public ITargetResolver TargetResolver { get; }
+    #endregion
 
+    #region Runtime State
     public uint Mana { get; private set; }
     public PlayerTarget Player { get; private set; }
-    
+
     List<EnemyTarget> _enemies = new();
     public IReadOnlyList<EnemyTarget> Enemies => _enemies;
+    #endregion
+
+    #region Rules
+    public uint MaxMana { get; private set; }
+    public uint ManaGainPerTurn { get; private set; }
+
+    public uint MaxHandSize { get; private set; }
+    public uint DrawCountPerTurn { get; private set; }
+    #endregion
 
     public BattleContext(SpellExecutor spellExecutor, RelicExecutor relicExecutor, ITargetResolver targetResolver)
     {
@@ -30,6 +42,11 @@ public class BattleContext
     }
 
     #region Mana
+    public bool CanUseMana(uint amount)
+    {
+        return Mana >= amount;
+    }
+
     public void UseMana(uint amount)
     {
         var before = Mana;
@@ -40,8 +57,30 @@ public class BattleContext
     public void AddMana(uint amount)
     {
         var before = Mana;
-        Mana += amount;
+
+        if (Mana >= MaxMana)
+        {
+            Mana = MaxMana;
+        }
+        else
+        {
+            uint remaining = MaxMana - Mana;
+            Mana += amount >= remaining ? remaining : amount;
+        }
+
         Debug.Log($"[Mana] Add | {amount} ({before} -> {Mana})");
+    }
+
+    public void IncreaseMaxMana(uint amount)
+    {
+        var beforeMax = MaxMana;
+
+        if (uint.MaxValue - MaxMana < amount)
+            MaxMana = uint.MaxValue;
+        else
+            MaxMana += amount;
+
+        Debug.Log($"[Mana] Max Increase | {amount} ({beforeMax} -> {MaxMana})");
     }
     #endregion
 

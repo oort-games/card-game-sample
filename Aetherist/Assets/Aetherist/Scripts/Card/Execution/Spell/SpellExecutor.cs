@@ -13,17 +13,17 @@ public class SpellExecutor
         };
     }
 
-    public void Excute(SpellCard card, BattleContext context)
+    public void Excute(SpellCard spell, BattleContext context)
     {
-        if (_actions.TryGetValue(card.Data.actionType, out var action))
+        if (_actions.TryGetValue(spell.Data.actionType, out var action))
         {
-            context.RelicExecutor.Trigger(RelicTriggerType.OnSpellUsed, context, card);
-            action.Excute(card, context);
-            context.RelicExecutor.Trigger(RelicTriggerType.OnSpellResolved, context, card);
+            context.RelicExecutor.Trigger(RelicTriggerType.OnSpellUsed, context, spell);
+            action.Excute(spell, context);
+            context.RelicExecutor.Trigger(RelicTriggerType.OnSpellResolved, context, spell);
         }
         else
         {
-            Debug.LogError($"Unhandled SpellActionType: {card.Data.actionType}");
+            Debug.LogError($"Unhandled SpellActionType: {spell.Data.actionType}");
         }
     }
 }

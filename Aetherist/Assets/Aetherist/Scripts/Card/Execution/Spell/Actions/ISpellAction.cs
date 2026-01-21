@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface ISpellAction
 {
-    void Excute(SpellCard card, BattleContext context);
+    void Excute(SpellCard spell, BattleContext context);
 }

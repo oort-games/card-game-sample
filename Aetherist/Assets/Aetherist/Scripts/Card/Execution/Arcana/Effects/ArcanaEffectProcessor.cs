@@ -1,0 +1,25 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public static class ArcanaEffectProcessor
+{
+    static readonly Dictionary<ArcanaEffectType, IArcanaEffectHandler> _handlers = new()
+    {
+        { ArcanaEffectType.IncreaseMaxMana, new ArcanaIncreaseMaxManaHandler() },
+    };
+
+    public static void Apply(ArcanaCardData arcana, BattleContext context)
+    {
+        foreach (var effect in arcana.effects)
+        {
+            if (_handlers.TryGetValue(effect.effectType, out var handler))
+            {
+                handler.Apply(effect, context);
+            }
+            else
+            {
+                Debug.LogError($"Unhandled ArcanaEffectType: {effect.effectType}");
+            }
+        }
+    }
+}
