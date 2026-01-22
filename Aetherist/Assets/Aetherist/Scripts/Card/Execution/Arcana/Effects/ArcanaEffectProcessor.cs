@@ -8,18 +8,14 @@ public static class ArcanaEffectProcessor
         { ArcanaEffectType.IncreaseMaxMana, new ArcanaIncreaseMaxManaHandler() },
     };
 
-    public static void Apply(ArcanaCardData arcana, BattleContext context)
+    public static void Apply(ArcanaEffectData effect, BattleContext context)
     {
-        foreach (var effect in arcana.effects)
+        if (_handlers.TryGetValue(effect.effectType, out var handler))
         {
-            if (_handlers.TryGetValue(effect.effectType, out var handler))
-            {
-                handler.Apply(effect, context);
-            }
-            else
-            {
-                Debug.LogError($"Unhandled ArcanaEffectType: {effect.effectType}");
-            }
+            handler.Apply(effect, context);
+            return;
         }
+
+        Debug.LogError($"Unhandled ArcanaEffectType: {effect.effectType}");
     }
 }

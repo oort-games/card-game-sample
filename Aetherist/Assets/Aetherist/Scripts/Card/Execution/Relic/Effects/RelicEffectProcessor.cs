@@ -20,7 +20,7 @@ public static class RelicEffectProcessor
             }
             else
             {
-                Debug.LogError($"Unhandled RelicEffectType: {effect.effectType}");
+                Debug.LogWarning($"[RelicEffectType] Unhandled type: {effect.effectType}");
             }
         }
     }

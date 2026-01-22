@@ -18,7 +18,7 @@ public static class SpellEffectProcessor
         }
         else
         {
-            Debug.LogError($"Unhandled SpellEffectType: {effect.effectType}");
+            Debug.LogWarning($"[SpellEffectType] Unhandled type: {effect.effectType}");
         }
     }
 }

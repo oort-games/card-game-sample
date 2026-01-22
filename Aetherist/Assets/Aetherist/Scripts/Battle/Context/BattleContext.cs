@@ -4,8 +4,12 @@ using UnityEngine;
 public class BattleContext
 {
     #region System
+    public BattlePresentationQueue PresentationQueue { get; }
+
     public SpellExecutor SpellExecutor { get; }
     public RelicExecutor RelicExecutor { get; }
+    public ArcanaExecutor ArcanaExecutor { get; }
+
     public ITargetResolver TargetResolver { get; }
     #endregion
 
@@ -25,10 +29,17 @@ public class BattleContext
     public uint DrawCountPerTurn { get; private set; }
     #endregion
 
-    public BattleContext(SpellExecutor spellExecutor, RelicExecutor relicExecutor, ITargetResolver targetResolver)
+    public BattleContext(
+        BattlePresentationQueue presentationQueue,
+        SpellExecutor spellExecutor, 
+        RelicExecutor relicExecutor,
+        ArcanaExecutor arcanaExecutor,
+        ITargetResolver targetResolver)
     {
         SpellExecutor = spellExecutor;
         RelicExecutor = relicExecutor;
+        ArcanaExecutor = arcanaExecutor;
+        PresentationQueue = presentationQueue;
         TargetResolver = targetResolver;
     }
 

@@ -5,13 +5,24 @@ public class BattleTestRunner : MonoBehaviour
 {
     [SerializeField] SpellCardData testSpellCard;
     [SerializeField] RelicCardData testRelicCard;
+    [SerializeField] ArcanaCardData testArcanaCard;
 
     void Start()
     {
+        var presentationQueue = new BattlePresentationQueue();
+
+        var spellExecutor = new SpellExecutor();
+        var relicExecutor = new RelicExecutor();
+        var arcanaExecutor = new ArcanaExecutor(presentationQueue);
+
+        var targetResolver = new DefaultTargetResolver();
+
         var context = new BattleContext(
-            spellExecutor: new SpellExecutor(),
-            relicExecutor: new RelicExecutor(),
-            targetResolver: new DefaultTargetResolver() 
+            presentationQueue,
+            spellExecutor,
+            relicExecutor,
+            arcanaExecutor,
+            targetResolver
             );
 
         var player = new PlayerTarget(20);
@@ -29,11 +40,15 @@ public class BattleTestRunner : MonoBehaviour
 
         context.RelicExecutor.Trigger(RelicTriggerType.OnBattleStart, context);
 
+        context.ArcanaExecutor.Execute(testArcanaCard, context);
+
         var spell = new SpellCard(testSpellCard);
 
         if (spell.CanPlay(context))
         {
             spell.Play(context);
         }
+
+        StartCoroutine(context.PresentationQueue.Play());
     }
 }

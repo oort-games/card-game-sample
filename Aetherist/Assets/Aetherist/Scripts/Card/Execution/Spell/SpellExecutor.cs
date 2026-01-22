@@ -23,7 +23,7 @@ public class SpellExecutor
         }
         else
         {
-            Debug.LogError($"Unhandled SpellActionType: {spell.Data.actionType}");
+            Debug.LogWarning($"[SpellActionType] Unhandled type: {spell.Data.actionType}");
         }
     }
 }
