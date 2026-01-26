@@ -19,7 +19,9 @@ public class ArcanaPresentation : IBattlePresentation
         {
             yield return presenter.Play(_effect, _context);
         }
-
-        ArcanaEffectProcessor.Apply(_effect, _context);
+        else
+        {
+            ArcanaEffectProcessor.Apply(_effect, _context);
+        }
     }
 }

@@ -2,11 +2,8 @@ using UnityEngine;
 
 public class ArcanaExecutor
 {
-    readonly BattlePresentationQueue _queue;
-
-    public ArcanaExecutor(BattlePresentationQueue queue)
+    public ArcanaExecutor()
     {
-        _queue = queue;
     }
 
     public void Execute(ArcanaCardData arcana, BattleContext context)
@@ -19,6 +16,6 @@ public class ArcanaExecutor
 
     void Execute(ArcanaEffectData effect, BattleContext context)
     {
-        _queue.Enqueue(new ArcanaPresentation(effect, context));
+        context.PresentationQueue.Enqueue(new ArcanaPresentation(effect, context));
     }
 }

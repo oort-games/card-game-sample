@@ -10,7 +10,7 @@ public class SpellAttackAction : ISpellAction
 
             foreach (var target in targets)
             {
-                SpellEffectProcessor.Apply(effect, target, spell, context);
+                context.PresentationQueue.Enqueue(new SpellPresentation(effect, target, context));
             }
         }
     }

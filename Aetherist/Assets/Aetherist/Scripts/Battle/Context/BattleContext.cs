@@ -30,10 +30,10 @@ public class BattleContext
     #endregion
 
     public BattleContext(
-        BattlePresentationQueue presentationQueue,
         SpellExecutor spellExecutor, 
         RelicExecutor relicExecutor,
         ArcanaExecutor arcanaExecutor,
+        BattlePresentationQueue presentationQueue,
         ITargetResolver targetResolver)
     {
         SpellExecutor = spellExecutor;
@@ -46,8 +46,9 @@ public class BattleContext
     public void SetupBattle(uint startMana, PlayerTarget player, IReadOnlyList<EnemyTarget> enemies)
     {
         Mana = startMana;
-        Player = player;
+        MaxMana = startMana;
 
+        Player = player;
         _enemies.Clear();
         _enemies.AddRange(enemies);
     }

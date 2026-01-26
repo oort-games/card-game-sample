@@ -9,19 +9,18 @@ public class BattleTestRunner : MonoBehaviour
 
     void Start()
     {
-        var presentationQueue = new BattlePresentationQueue();
-
         var spellExecutor = new SpellExecutor();
         var relicExecutor = new RelicExecutor();
-        var arcanaExecutor = new ArcanaExecutor(presentationQueue);
+        var arcanaExecutor = new ArcanaExecutor();
 
+        var presentationQueue = new BattlePresentationQueue();
         var targetResolver = new DefaultTargetResolver();
 
         var context = new BattleContext(
-            presentationQueue,
             spellExecutor,
             relicExecutor,
             arcanaExecutor,
+            presentationQueue,
             targetResolver
             );
 
@@ -37,11 +36,8 @@ public class BattleTestRunner : MonoBehaviour
         context.RelicExecutor.AddRelic(relic);
 
         Debug.Log("[Battle] Start | Test");
-
-        context.RelicExecutor.Trigger(RelicTriggerType.OnBattleStart, context);
-
         context.ArcanaExecutor.Execute(testArcanaCard, context);
-
+        context.RelicExecutor.Trigger(RelicTriggerType.OnBattleStart, context);
         var spell = new SpellCard(testSpellCard);
 
         if (spell.CanPlay(context))
