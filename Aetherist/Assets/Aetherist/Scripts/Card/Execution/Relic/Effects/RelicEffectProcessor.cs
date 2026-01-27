@@ -10,18 +10,15 @@ public static class RelicEffectProcessor
         { RelicEffectType.ModifySpellCost, new RelicModifySpellCostEffectHandler() },
     };
 
-    public static void Apply(RelicCard relic, RelicTriggerContext context)
+    public static void Apply(RelicEffectData effect, RelicTriggerContext context)
     {
-        foreach (var effect in relic.Data.effects)
+        if (_handlers.TryGetValue(effect.effectType, out var handler))
         {
-            if (_handlers.TryGetValue(effect.effectType, out var handler))
-            {
-                handler.Apply(effect, relic, context);
-            }
-            else
-            {
-                Debug.LogWarning($"[RelicEffectType] Unhandled type: {effect.effectType}");
-            }
+            handler.Apply(effect, context);
+        }
+        else
+        {
+            Debug.LogWarning($"[Relic EffectType] Unhandled type: {effect.effectType}");
         }
     }
 }

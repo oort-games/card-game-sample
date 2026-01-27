@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class RelicExecutor
@@ -37,6 +38,9 @@ public class RelicExecutor
     void Excute(RelicCard relic, RelicTriggerContext context)
     {
         Debug.Log($"[Relic] Excute | {relic.Data.displayName} ({relic.Data.triggerType})");
-        RelicEffectProcessor.Apply(relic, context);
+        foreach (var effect in relic.Data.effects)
+        {
+            context.BattleContext.PresentationQueue.Enqueue(new RelicPresentation(effect, context));
+        }
     }
 }

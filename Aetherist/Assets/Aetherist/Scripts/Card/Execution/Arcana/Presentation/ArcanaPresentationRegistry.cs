@@ -15,7 +15,7 @@ public static class ArcanaPresentationRegistry
             return handler;
         }
 
-        Debug.LogWarning($"[ArcanaPresentation] Unhandled type: {type}");
+        Debug.LogWarning($"[Arcana Presentation] Unhandled type: {type}");
         return null;
     }
 }

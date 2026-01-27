@@ -15,7 +15,7 @@ public class SpellPresentationRegistry : MonoBehaviour
             return handler;
         }
 
-        Debug.LogWarning($"[SpellPresentation] Unhandled type: {type}");
+        Debug.LogWarning($"[Spell Presentation] Unhandled type: {type}");
         return null;
     }
 }

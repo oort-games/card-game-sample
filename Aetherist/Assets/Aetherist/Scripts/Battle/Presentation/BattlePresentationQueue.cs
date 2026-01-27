@@ -6,6 +6,8 @@ public class BattlePresentationQueue
     readonly Queue<IBattlePresentation> _queue = new();
     bool _isPlaying;
 
+    public bool IsPlaying => _isPlaying;
+
     public void Enqueue(IBattlePresentation presentation)
     {
         _queue.Enqueue(presentation);

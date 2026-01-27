@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ public class BattleTestRunner : MonoBehaviour
     [SerializeField] SpellCardData testSpellCard;
     [SerializeField] RelicCardData testRelicCard;
     [SerializeField] ArcanaCardData testArcanaCard;
+
+    BattleContext context;
 
     void Start()
     {
@@ -16,7 +19,7 @@ public class BattleTestRunner : MonoBehaviour
         var presentationQueue = new BattlePresentationQueue();
         var targetResolver = new DefaultTargetResolver();
 
-        var context = new BattleContext(
+        context = new BattleContext(
             spellExecutor,
             relicExecutor,
             arcanaExecutor,
@@ -35,16 +38,22 @@ public class BattleTestRunner : MonoBehaviour
         var relic = new RelicCard(testRelicCard);
         context.RelicExecutor.AddRelic(relic);
 
+        StartCoroutine(StartBattle());
+    }
+
+    IEnumerator StartBattle()
+    {
         Debug.Log("[Battle] Start | Test");
         context.ArcanaExecutor.Execute(testArcanaCard, context);
         context.RelicExecutor.Trigger(RelicTriggerType.OnBattleStart, context);
+
+        yield return context.PresentationQueue.Play();
+
         var spell = new SpellCard(testSpellCard);
 
         if (spell.CanPlay(context))
         {
             spell.Play(context);
         }
-
-        StartCoroutine(context.PresentationQueue.Play());
     }
 }

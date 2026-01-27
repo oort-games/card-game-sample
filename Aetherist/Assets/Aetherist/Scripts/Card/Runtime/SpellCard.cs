@@ -10,7 +10,8 @@ public class SpellCard : Card
 
     public override bool CanPlay(BattleContext context)
     {
-        return context.CanUseMana(CurrentCost);
+        return context.CanUseMana(CurrentCost)
+            && !context.PresentationQueue.IsPlaying;
     }
 
     public override void Play(BattleContext context)

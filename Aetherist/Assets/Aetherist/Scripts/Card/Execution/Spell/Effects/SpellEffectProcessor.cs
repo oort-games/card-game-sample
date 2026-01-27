@@ -7,7 +7,7 @@ public static class SpellEffectProcessor
     {
         { SpellEffectType.Damage, new SpellDamageEffectHandler() },
         { SpellEffectType.Draw, new SpellDrawEffectHandler() },
-        { SpellEffectType.Heal, new SpellDrawEffectHandler() },
+        { SpellEffectType.Heal, new SpellHealEffectHandler() },
     };
 
     public static void Apply(SpellEffectData effect, IBattleTarget target, BattleContext context)
@@ -18,7 +18,7 @@ public static class SpellEffectProcessor
         }
         else
         {
-            Debug.LogWarning($"[SpellEffectType] Unhandled type: {effect.effectType}");
+            Debug.LogWarning($"[Spell EffectType] Unhandled type: {effect.effectType}");
         }
     }
 }
