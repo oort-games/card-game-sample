@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class BattleTestRunner : MonoBehaviour
 {
-    [SerializeField] SpellCardData testSpellCard;
-    [SerializeField] RelicCardData testRelicCard;
-    [SerializeField] ArcanaCardData testArcanaCard;
+    [SerializeField] SpellCardData _testSpellCard;
+    [SerializeField] RelicCardData _testRelicCard;
+    [SerializeField] ArcanaCardData _testArcanaCard;
 
-    BattleContext context;
+    BattleContext _context;
 
     void Start()
     {
@@ -19,7 +19,7 @@ public class BattleTestRunner : MonoBehaviour
         var presentationQueue = new BattlePresentationQueue();
         var targetResolver = new DefaultTargetResolver();
 
-        context = new BattleContext(
+        _context = new BattleContext(
             spellExecutor,
             relicExecutor,
             arcanaExecutor,
@@ -33,10 +33,10 @@ public class BattleTestRunner : MonoBehaviour
             new EnemyTarget(10)
         };
 
-        context.SetupBattle(3, player, enemies);
+        _context.SetupBattle(3, player, enemies);
 
-        var relic = new RelicCard(testRelicCard);
-        context.RelicExecutor.AddRelic(relic);
+        var relic = new RelicCard(_testRelicCard);
+        _context.RelicExecutor.AddRelic(relic);
 
         StartCoroutine(StartBattle());
     }
@@ -44,16 +44,16 @@ public class BattleTestRunner : MonoBehaviour
     IEnumerator StartBattle()
     {
         Debug.Log("[Battle] Start | Test");
-        context.ArcanaExecutor.Execute(testArcanaCard, context);
-        context.RelicExecutor.Trigger(RelicTriggerType.OnBattleStart, context);
+        _context.ArcanaExecutor.Execute(_testArcanaCard, _context);
+        _context.RelicExecutor.Trigger(RelicTriggerType.OnBattleStart, _context);
 
-        yield return context.PresentationQueue.Play();
+        yield return _context.PresentationQueue.Play();
 
-        var spell = new SpellCard(testSpellCard);
+        var spell = new SpellCard(_testSpellCard);
 
-        if (spell.CanPlay(context))
+        if (spell.CanPlay(_context))
         {
-            spell.Play(context);
+            spell.Play(_context);
         }
     }
 }
