@@ -17,7 +17,7 @@ public class BattleContext
     public uint Mana { get; private set; }
     public PlayerTarget Player { get; private set; }
 
-    List<EnemyTarget> _enemies = new();
+    readonly List<EnemyTarget> _enemies = new();
     public IReadOnlyList<EnemyTarget> Enemies => _enemies;
     #endregion
 

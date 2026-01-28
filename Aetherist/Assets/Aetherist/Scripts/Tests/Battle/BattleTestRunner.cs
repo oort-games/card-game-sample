@@ -8,6 +8,8 @@ public class BattleTestRunner : MonoBehaviour
     [SerializeField] RelicCardData _testRelicCard;
     [SerializeField] ArcanaCardData _testArcanaCard;
 
+    [SerializeField] BattleSceneController _battleSceneController;
+
     BattleContext _context;
 
     void Start()
@@ -30,15 +32,17 @@ public class BattleTestRunner : MonoBehaviour
         var player = new PlayerTarget(20);
         var enemies = new List<EnemyTarget>
         {
-            new EnemyTarget(10)
+            new(10)
         };
 
         _context.SetupBattle(3, player, enemies);
 
-        var relic = new RelicCard(_testRelicCard);
-        _context.RelicExecutor.AddRelic(relic);
+        _battleSceneController.StartBattle(_context);
 
-        StartCoroutine(StartBattle());
+        //var relic = new RelicCard(_testRelicCard);
+        //_context.RelicExecutor.AddRelic(relic);
+
+        //StartCoroutine(StartBattle());
     }
 
     IEnumerator StartBattle()
