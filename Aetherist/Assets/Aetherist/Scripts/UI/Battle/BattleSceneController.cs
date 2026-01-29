@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BattleSceneController : MonoBehaviour
@@ -9,15 +10,18 @@ public class BattleSceneController : MonoBehaviour
     BattleHand _hand;
     BattleHandController _handController;
 
-    public void StartBattle(BattleContext context)
+    public void StartBattle(BattleContext context, IEnumerable<SpellCard> initialDeck)
     {
         _context = context;
 
+        var deck = new BattleDeck(initialDeck);
         _hand = new BattleHand();
-        _handController = new BattleHandController(_context, _hand);
+        _handController = new BattleHandController(_context, deck,_hand);
 
         _uiBootstrap.Init(_context, _hand);
 
         _handController.Draw(_context.DrawCountPerTurn);
+
+        _uiBootstrap.RefreshHand();
     }
 }

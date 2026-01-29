@@ -4,10 +4,31 @@ using UnityEngine;
 
 public class BattleTestRunner : MonoBehaviour
 {
-    [SerializeField] SpellCardData _testSpellCard;
-    [SerializeField] RelicCardData _testRelicCard;
-    [SerializeField] ArcanaCardData _testArcanaCard;
+    //[SerializeField] SpellCardData _testSpellCard;
+    //[SerializeField] RelicCardData _testRelicCard;
+    //[SerializeField] ArcanaCardData _testArcanaCard;
 
+    [Header("Deck")]
+    [SerializeField] SpellCardData[] _spellDeck;
+
+    [Header("Relic")]
+    [SerializeField] RelicCardData[] _relics;
+
+    [Header("Arcana")]
+    [SerializeField] ArcanaCardData[] _arcanas;
+
+    [Header("Player")]
+    [SerializeField] uint _player = 20;
+
+    [Header("Enemies")]
+    [SerializeField] List<uint> _enemys = new() { 10 };
+
+    [Header("Battle Rules")]
+    [SerializeField] uint _mana = 3;
+    [SerializeField] uint _maxHandSize = 5;
+    [SerializeField] uint _drawCountPerTurn = 3;
+
+    [Header("UI")]
     [SerializeField] BattleSceneController _battleSceneController;
 
     BattleContext _context;
@@ -29,35 +50,60 @@ public class BattleTestRunner : MonoBehaviour
             targetResolver
             );
 
-        var player = new PlayerTarget(20);
-        var enemies = new List<EnemyTarget>
+        var player = new PlayerTarget(_player);
+
+        var enemies = new List<EnemyTarget>();
+        foreach (var hp in _enemys)
         {
-            new(10)
-        };
+            enemies.Add(new EnemyTarget(hp));
+        }
 
-        _context.SetupBattle(3, player, enemies);
+        _context.SetupBattle(player, enemies, _mana, _maxHandSize, _drawCountPerTurn);
+        var testDeck = CreateDeck();
 
-        _battleSceneController.StartBattle(_context);
-
-        //var relic = new RelicCard(_testRelicCard);
-        //_context.RelicExecutor.AddRelic(relic);
-
-        //StartCoroutine(StartBattle());
+        _battleSceneController.StartBattle(_context, testDeck);
+        SetupRelic();
+        ExecuteArcanas();
+        //_context.PresentationQueue.Play();
     }
 
-    IEnumerator StartBattle()
+    IEnumerable<SpellCard> CreateDeck()
     {
-        Debug.Log("[Battle] Start | Test");
-        _context.ArcanaExecutor.Execute(_testArcanaCard, _context);
-        _context.RelicExecutor.Trigger(RelicTriggerType.OnBattleStart, _context);
-
-        yield return _context.PresentationQueue.Play();
-
-        var spell = new SpellCard(_testSpellCard);
-
-        if (spell.CanPlay(_context))
+        foreach (var cardData in _spellDeck)
         {
-            spell.Play(_context);
+            if (cardData == null)
+                continue;
+
+            yield return new SpellCard(cardData);
+        }
+    }
+
+    void SetupRelic()
+    {
+        if (_relics == null)
+            return;
+
+        foreach (var relicData in _relics)
+        {
+            if (relicData == null)
+                continue;
+
+            var relic = new RelicCard(relicData);
+            _context.RelicExecutor.AddRelic(relic);
+        }
+    }
+
+    void ExecuteArcanas()
+    {
+        if (_arcanas == null)
+            return;
+
+        foreach (var arcanaData in _arcanas)
+        {
+            if (arcanaData == null)
+                continue;
+
+            _context.ArcanaExecutor.Execute(arcanaData, _context);
         }
     }
 }

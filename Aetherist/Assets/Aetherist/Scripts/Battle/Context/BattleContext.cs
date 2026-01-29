@@ -14,11 +14,12 @@ public class BattleContext
     #endregion
 
     #region Runtime State
-    public uint Mana { get; private set; }
     public PlayerTarget Player { get; private set; }
 
     readonly List<EnemyTarget> _enemies = new();
     public IReadOnlyList<EnemyTarget> Enemies => _enemies;
+
+    public uint Mana { get; private set; }
     #endregion
 
     #region Rules
@@ -29,10 +30,7 @@ public class BattleContext
     public uint DrawCountPerTurn { get; private set; }
     #endregion
 
-    public BattleContext(
-        SpellExecutor spellExecutor, 
-        RelicExecutor relicExecutor,
-        ArcanaExecutor arcanaExecutor,
+    public BattleContext(SpellExecutor spellExecutor, RelicExecutor relicExecutor,ArcanaExecutor arcanaExecutor,
         BattlePresentationQueue presentationQueue,
         ITargetResolver targetResolver)
     {
@@ -43,14 +41,18 @@ public class BattleContext
         TargetResolver = targetResolver;
     }
 
-    public void SetupBattle(uint startMana, PlayerTarget player, IReadOnlyList<EnemyTarget> enemies)
+    public void SetupBattle(PlayerTarget player, IReadOnlyList<EnemyTarget> enemies,
+        uint mana, uint maxHandSize, uint drawCountPerTurn)
     {
-        Mana = startMana;
-        MaxMana = startMana;
-
         Player = player;
         _enemies.Clear();
         _enemies.AddRange(enemies);
+
+        Mana = mana;
+        MaxMana = mana;
+
+        MaxHandSize = maxHandSize;
+        DrawCountPerTurn = drawCountPerTurn;
     }
 
     #region Mana

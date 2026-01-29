@@ -733,9 +733,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20dcbefd23b7814428e33279d4d433ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _testSpellCard: {fileID: 11400000, guid: 82df26fadf6438b41bf1fa6144198d61, type: 2}
-  _testRelicCard: {fileID: 11400000, guid: 206f4b0a2f583c14391357d13b20cff8, type: 2}
-  _testArcanaCard: {fileID: 11400000, guid: 8f8a76954ba48d540acade6f86b429ce, type: 2}
+  _spellDeck:
+  - {fileID: 11400000, guid: 82df26fadf6438b41bf1fa6144198d61, type: 2}
+  - {fileID: 11400000, guid: b1eb929c3b4e03b4d86f0a6936f9126b, type: 2}
+  - {fileID: 11400000, guid: 3d57ec7d3a91261408847e64a2d34e2e, type: 2}
+  - {fileID: 11400000, guid: 8fce2cb3948f7f540963bcf6ca57c2e8, type: 2}
+  - {fileID: 11400000, guid: 416afa35b1b2d4248a2aaa02330da04b, type: 2}
+  _relics: []
+  _arcanas: []
+  _playerHP: 20
+  _enemyHPs: 0a000000
+  _mana: 3
+  _maxHandSize: 5
+  _drawCountPerTurn: 3
   _battleSceneController: {fileID: 1794846100}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
