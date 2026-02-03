@@ -6,11 +6,11 @@ public class BattleHandController
     readonly BattleDeck _deck;
     readonly BattleHand _hand;
 
-    public BattleHandController(BattleContext context, BattleDeck deck, BattleHand hand)
+    public BattleHandController(BattleContext context)
     {
         _context = context;
-        _deck = deck;
-        _hand = hand;
+        _deck = context.Deck;
+        _hand = context.Hand;
     }
 
     public void Draw(uint count)

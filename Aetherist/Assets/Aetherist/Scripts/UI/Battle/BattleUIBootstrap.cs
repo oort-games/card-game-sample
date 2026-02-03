@@ -6,9 +6,9 @@ public class BattleUIBootstrap : MonoBehaviour
 
     BattleHand _hand;
 
-    public void Init(BattleContext context, BattleHand hand)
+    public void Init(BattleContext context)
     {
-        _hand = hand;
+        _hand = context.Hand;
     }
 
     public void RefreshHand()

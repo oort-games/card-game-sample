@@ -20,6 +20,9 @@ public class BattleContext
     public IReadOnlyList<EnemyTarget> Enemies => _enemies;
 
     public uint Mana { get; private set; }
+
+    public BattleDeck Deck { get; private set; }
+    public BattleHand Hand { get; private set; }
     #endregion
 
     #region Rules
@@ -30,7 +33,11 @@ public class BattleContext
     public uint DrawCountPerTurn { get; private set; }
     #endregion
 
-    public BattleContext(SpellExecutor spellExecutor, RelicExecutor relicExecutor,ArcanaExecutor arcanaExecutor,
+    #region Scene
+    public BattleSceneController SceneController { get; private set; }
+    #endregion
+
+    public BattleContext(SpellExecutor spellExecutor, RelicExecutor relicExecutor, ArcanaExecutor arcanaExecutor,
         BattlePresentationQueue presentationQueue,
         ITargetResolver targetResolver)
     {
@@ -41,6 +48,7 @@ public class BattleContext
         TargetResolver = targetResolver;
     }
 
+    #region Setup
     public void SetupBattle(PlayerTarget player, IReadOnlyList<EnemyTarget> enemies,
         uint mana, uint maxHandSize, uint drawCountPerTurn)
     {
@@ -54,6 +62,18 @@ public class BattleContext
         MaxHandSize = maxHandSize;
         DrawCountPerTurn = drawCountPerTurn;
     }
+
+    public void SetupCard(BattleDeck deck, BattleHand hand)
+    {
+        Deck = deck;
+        Hand = hand;
+    }
+
+    public void SetupScene(BattleSceneController sceneController)
+    {
+        SceneController = sceneController;
+    }
+    #endregion
 
     #region Mana
     public bool CanUseMana(uint amount)

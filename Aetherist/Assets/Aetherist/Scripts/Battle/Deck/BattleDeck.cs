@@ -10,9 +10,9 @@ public class BattleDeck
     public int DrawCount => _drawCards.Count;
     public int DiscardCount => _discardCards.Count;
 
-    public BattleDeck(IEnumerable<SpellCard> initialCards)
+    public BattleDeck(List<SpellCard> cards)
     {
-        _drawCards.AddRange(initialCards);
+        _drawCards.AddRange(cards);
         Shuffle();
     }
 

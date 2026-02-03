@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class BattleTestRunner : MonoBehaviour
 {
-    //[SerializeField] SpellCardData _testSpellCard;
-    //[SerializeField] RelicCardData _testRelicCard;
-    //[SerializeField] ArcanaCardData _testArcanaCard;
-
     [Header("Deck")]
-    [SerializeField] SpellCardData[] _spellDeck;
+    [SerializeField] SpellCardData[] _spells;
 
     [Header("Relic")]
     [SerializeField] RelicCardData[] _relics;
@@ -58,24 +54,29 @@ public class BattleTestRunner : MonoBehaviour
             enemies.Add(new EnemyTarget(hp));
         }
 
-        _context.SetupBattle(player, enemies, _mana, _maxHandSize, _drawCountPerTurn);
-        var testDeck = CreateDeck();
+        var deck = CreateDeck();
+        var hand = new BattleHand();
 
-        _battleSceneController.StartBattle(_context, testDeck);
+        _context.SetupBattle(player, enemies, _mana, _maxHandSize, _drawCountPerTurn);
+        _context.SetupCard(deck, hand);
+        _context.SetupScene(_battleSceneController);
+
+        _battleSceneController.StartBattle(_context);
         SetupRelic();
         ExecuteArcanas();
-        //_context.PresentationQueue.Play();
     }
 
-    IEnumerable<SpellCard> CreateDeck()
+    BattleDeck CreateDeck()
     {
-        foreach (var cardData in _spellDeck)
+        List<SpellCard> cards = new();
+        foreach (var spellData in _spells)
         {
-            if (cardData == null)
+            if (spellData == null)
                 continue;
 
-            yield return new SpellCard(cardData);
+            cards.Add(new SpellCard(spellData));
         }
+        return new BattleDeck(cards);
     }
 
     void SetupRelic()
