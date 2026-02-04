@@ -10,6 +10,8 @@ public class HandCardPanel : MonoBehaviour
     readonly Dictionary<SpellCard, BattleSpellCard> _handCards = new();
     BattleSpellCard _selected;
 
+    public event Action<SpellCard> OnCardUseRequested;
+
     public void AddCard(SpellCard card)
     {
         var view = Instantiate(_cardViewPrefab, _cardRoot);
@@ -31,7 +33,7 @@ public class HandCardPanel : MonoBehaviour
         _handCards.Remove(card);
     }
 
-    public void ClearHand()
+    public void ClearCard()
     {
         foreach (var battleCard in _handCards.Values)
             Destroy(battleCard.View.gameObject);
@@ -42,8 +44,22 @@ public class HandCardPanel : MonoBehaviour
 
     void OnCardClicked(BattleSpellCard card)
     {
+        if (_selected == card)
+        {
+            OnCardUseRequested?.Invoke(card.Card);
+            return;
+        }
+
         _selected?.SetSelected(false);
         _selected = card;
         _selected.SetSelected(true);
+    }
+
+    public void SetPlayable(SpellCard card, bool playable)
+    {
+        if (_handCards.TryGetValue(card, out var battleCard))
+        {
+            battleCard.View.SetPlayable(playable);
+        }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,6 +36,10 @@ public class BattleContext
 
     #region Scene
     public BattleSceneController SceneController { get; private set; }
+    #endregion
+
+    #region Event
+    public event Action OnManaChanged;
     #endregion
 
     public BattleContext(SpellExecutor spellExecutor, RelicExecutor relicExecutor, ArcanaExecutor arcanaExecutor,
@@ -85,6 +90,7 @@ public class BattleContext
     {
         var before = Mana;
         Mana -= amount;
+        OnManaChanged?.Invoke();
         Debug.Log($"[Mana] Use | {amount} ({before} -> {Mana})");
     }
 
@@ -101,7 +107,7 @@ public class BattleContext
             uint remaining = MaxMana - Mana;
             Mana += amount >= remaining ? remaining : amount;
         }
-
+        OnManaChanged?.Invoke();
         Debug.Log($"[Mana] Add | {amount} ({before} -> {Mana})");
     }
 
@@ -114,6 +120,7 @@ public class BattleContext
         else
             MaxMana += amount;
 
+        OnManaChanged?.Invoke();
         Debug.Log($"[Mana] Max Increase | {amount} ({beforeMax} -> {MaxMana})");
     }
     #endregion

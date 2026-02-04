@@ -20,7 +20,7 @@ MonoBehaviour:
   rarity: 0
   actionType: 1
   element: 2
-  cost: 1
+  cost: 4
   effects:
   - target: 2
     effectType: 1

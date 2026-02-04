@@ -27,4 +27,19 @@ public class BattleHandController
             _hand.Add(card);
         }
     }
+
+    public void UseCard(SpellCard card)
+    {
+        if (card == null)
+            return;
+
+        if (!card.CanPlay(_context))
+            return;
+
+        card.Play(_context);
+        _context.Hand.Remove(card);
+        _context.Deck.Discard(card);
+
+        _context.PresentationQueue.Play();
+    }
 }

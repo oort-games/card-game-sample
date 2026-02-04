@@ -37,7 +37,7 @@ public class SpellCardView : MonoBehaviour
         if (_canvasGroup == null)
             return;
 
-        _canvasGroup.alpha = playable ? 1 : 0;
+        _canvasGroup.alpha = playable ? 1.0f : 0.5f;
         _canvasGroup.interactable = playable;
         _canvasGroup.blocksRaycasts = playable;
     }

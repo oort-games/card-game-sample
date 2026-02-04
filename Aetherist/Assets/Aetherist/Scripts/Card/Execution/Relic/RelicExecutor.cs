@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RelicExecutor
 {
-    List<RelicCard> _relics;
+    readonly List<RelicCard> _relics;
 
     public RelicExecutor()
     {
