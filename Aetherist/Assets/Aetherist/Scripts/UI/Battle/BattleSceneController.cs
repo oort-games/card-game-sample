@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class BattleSceneController : MonoBehaviour
 {
-    [SerializeField] BattleUIBootstrap _uiBootstrap;
+    [Header("UI")]
+    [SerializeField] HandCardPanel _handPanel;
 
     BattleContext _context;
-
     BattleHandController _handController;
 
     public void StartBattle(BattleContext context)
@@ -14,10 +14,15 @@ public class BattleSceneController : MonoBehaviour
         _context = context;
         _handController = new BattleHandController(_context);
 
-        _uiBootstrap.Init(_context);
+        BindHandUI();
 
         _handController.Draw(_context.DrawCountPerTurn);
+    }
 
-        _uiBootstrap.RefreshHand();
+    void BindHandUI()
+    {
+        _context.Hand.OnCardAdded += _handPanel.AddCard;
+        _context.Hand.OnCardRemoved -= _handPanel.RemoveCard;
+        _context.Hand.OnChanged += () => { };
     }
 }

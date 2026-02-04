@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BattleSpellCard
@@ -7,23 +8,22 @@ public class BattleSpellCard
 
     public bool IsSelected { get; private set; }
 
+    public event Action<BattleSpellCard> OnClicked;
+
     public BattleSpellCard(SpellCard card, SpellCardView view)
     {
         Card = card;
         View = view;
 
         View.Bind(card.Data);
+
+        var input = view.GetComponent<CardInputHandler>();
+        input.OnClick += () => OnClicked?.Invoke(this);
     }
 
-    public void Select()
+    public void SetSelected(bool selected)
     {
-        IsSelected = true;
-        View.SetSelected(true);
-    }
-
-    public void Deselect()
-    {
-        IsSelected = false;
-        View.SetSelected(false);
+        IsSelected = selected;
+        View.SetSelected(selected);
     }
 }
