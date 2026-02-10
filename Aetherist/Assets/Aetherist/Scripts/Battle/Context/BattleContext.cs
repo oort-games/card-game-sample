@@ -40,6 +40,7 @@ public class BattleContext
 
     #region Event
     public event Action OnManaChanged;
+    public event Action OnCardDrawn;
     #endregion
 
     public BattleContext(SpellExecutor spellExecutor, RelicExecutor relicExecutor, ArcanaExecutor arcanaExecutor,
@@ -127,7 +128,31 @@ public class BattleContext
 
     public void DrawCards(uint count)
     {
+        for (int i = 0; i < count; i++)
+        {
+            if (Hand.Cards.Count >= MaxHandSize)
+                break;
 
+            var card = Deck.Draw(Hand.Cards);
+            if (card == null)
+                break;
+
+            Hand.Add(card);
+        }
+        OnCardDrawn?.Invoke();
+    }
+
+    public void UseCard(SpellCard card)
+    {
+        if (card == null)
+            return;
+
+        if (!card.CanPlay(this))
+            return;
+
+        card.Play(this);
+        Hand.Remove(card);
+        Deck.Discard(card);
     }
 
     public void CleanupDeadEnemies()

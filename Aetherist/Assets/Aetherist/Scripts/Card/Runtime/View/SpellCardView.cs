@@ -6,13 +6,18 @@ public class SpellCardView : MonoBehaviour
 {
     [Header("UI")]
     [SerializeField] TMP_Text _nameText;
+    [SerializeField] TMP_Text _descText;
     [SerializeField] TMP_Text _costText;
 
     [Header("Selection")]
     [SerializeField] GameObject _selectedObject;
 
-    [Header("State")]
-    [SerializeField] CanvasGroup _canvasGroup;
+    [Header("Input")]
+    [SerializeField] Collider2D _collider;
+
+    [Header("Playable Color")]
+    [SerializeField] Color _playableCostColor = Color.green;
+    [SerializeField] Color _unPlayableCostColor = Color.red;
 
     SpellCardData _data;
 
@@ -21,6 +26,7 @@ public class SpellCardView : MonoBehaviour
         _data = data;
 
         _nameText.text = data.displayName;
+        _descText.text = data.description;
         _costText.text = $"{data.cost}";
 
         SetSelected(false);
@@ -34,11 +40,11 @@ public class SpellCardView : MonoBehaviour
 
     public void SetPlayable(bool playable)
     {
-        if (_canvasGroup == null)
-            return;
+        if (_collider == null)
+        {
+            _collider.enabled = playable;
+        }
 
-        _canvasGroup.alpha = playable ? 1.0f : 0.5f;
-        _canvasGroup.interactable = playable;
-        _canvasGroup.blocksRaycasts = playable;
+        _costText.color = playable ? _playableCostColor : _unPlayableCostColor;
     }
 }

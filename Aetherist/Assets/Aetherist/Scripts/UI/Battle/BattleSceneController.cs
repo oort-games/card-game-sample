@@ -4,24 +4,23 @@ using UnityEngine;
 public class BattleSceneController : MonoBehaviour
 {
     [Header("UI")]
-    [SerializeField] HandCardPanel _handPanel;
+    [SerializeField] HandView _handView;
+    [SerializeField] RectTransform _deckAnchor;
 
     BattleContext _context;
-    BattleHandController _handController;
 
     #region Battle Lifecycle
     public void StartBattle(BattleContext context)
     {
         _context = context;
 
-        _handController = new BattleHandController(_context);
         _context.PresentationQueue.SetCoroutineHost(this);
 
         BindContext();
         BindHandUI();
         BindHandPanel();
 
-        _handController.Draw(_context.DrawCountPerTurn);
+        _context.DrawCards(_context.DrawCountPerTurn);
     }
     #endregion
 
@@ -29,6 +28,7 @@ public class BattleSceneController : MonoBehaviour
     void BindContext()
     {
         _context.OnManaChanged += OnManaChanged;
+        _context.OnCardDrawn += OnCardDrawn;
     }
 
     void BindHandUI()
@@ -40,7 +40,7 @@ public class BattleSceneController : MonoBehaviour
 
     void BindHandPanel()
     {
-        _handPanel.OnCardUseRequested += OnCardUseRequested;
+        _handView.OnCardUseRequested += OnCardUseRequested;
     }
     #endregion
 
@@ -54,21 +54,27 @@ public class BattleSceneController : MonoBehaviour
     {
         foreach (var card in _context.Hand.Cards)
         {
-            _handPanel.SetPlayable(card, card.CanPlay(_context));
+            _handView.SetPlayable(card, card.CanPlay(_context));
         }
+    }
+
+    void OnCardDrawn()
+    {
+        _context.PresentationQueue.Play();
     }
     #endregion
 
     #region Hand Event Handlers
     void OnCardAdded(SpellCard card)
     {
-        _handPanel.AddCard(card);
-        _handPanel.SetPlayable(card, card.CanPlay(_context));
+        _handView.AddCard(card);
+        _handView.SetPlayable(card, card.CanPlay(_context));
     }
 
     void OnCardRemoved(SpellCard card)
     {
-        _handPanel.RemoveCard(card);
+        _handView.RemoveCard(card);
+        //_handPanel.RemoveCard(card);
     }
 
     void OnHandChanged()
@@ -80,7 +86,8 @@ public class BattleSceneController : MonoBehaviour
     #region HandPanel Event Handlers
     void OnCardUseRequested(SpellCard card)
     {
-        _handController.UseCard(card);
+        _context.UseCard(card);
+        _context.PresentationQueue.Play();
     }
     #endregion
 }
