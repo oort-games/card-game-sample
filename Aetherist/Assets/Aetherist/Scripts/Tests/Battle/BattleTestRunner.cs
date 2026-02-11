@@ -25,7 +25,7 @@ public class BattleTestRunner : MonoBehaviour
     [SerializeField] uint _drawCountPerTurn = 3;
 
     [Header("UI")]
-    [SerializeField] BattleSceneController _battleSceneController;
+    [SerializeField] BattleViewController _battleViewController;
 
     BattleContext _context;
 
@@ -59,9 +59,9 @@ public class BattleTestRunner : MonoBehaviour
 
         _context.SetupBattle(player, enemies, _mana, _maxHandSize, _drawCountPerTurn);
         _context.SetupCard(deck, hand);
-        _context.SetupScene(_battleSceneController);
+        _context.SetupScene(_battleViewController);
 
-        _battleSceneController.StartBattle(_context);
+        _battleViewController.StartBattle(_context);
         SetupRelic();
         ExecuteArcanas();
     }

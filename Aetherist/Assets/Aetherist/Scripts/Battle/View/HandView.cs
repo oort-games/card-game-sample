@@ -6,12 +6,19 @@ using UnityEngine;
 
 public class HandView : MonoBehaviour
 {
-    [SerializeField] SpellCardView _cardViewPrefab;
+    [SerializeField] BattleSpellCardView _cardViewPrefab;
 
     [Header("Layout")]
-    [SerializeField] float spacing = 1.2f;
-    [SerializeField] float radius = 6.0f;
-    [SerializeField] float depth = 0.01f;
+    [SerializeField] float _spacing = 1.2f;
+    [SerializeField] float _radius = 15.0f;
+    [SerializeField] float _depth = 0.01f;
+    [SerializeField] float _angleStep = 5f;
+
+    [Header("Select Effect")]
+    [SerializeField] float _selectedY = 0.6f;
+    [SerializeField] float _selectedZ = -1f;
+    [SerializeField] float _selectedScale = 1.1f;
+    [SerializeField] float _spreadOffset = 2.0f;
 
     readonly Dictionary<SpellCard, BattleSpellCard> _cards = new();
     BattleSpellCard _selected;
@@ -25,6 +32,8 @@ public class HandView : MonoBehaviour
 
         var battleCard = new BattleSpellCard(card, view);
         battleCard.OnClicked += OnCardClicked;
+        battleCard.OnEntered += OnCardEntered;
+        battleCard.OnExited += OnCardExited;
 
         _cards.Add(card, battleCard);
 
@@ -68,12 +77,26 @@ public class HandView : MonoBehaviour
         if (_selected == card)
         {
             OnCardUseRequested?.Invoke(card.Card);
+            UpdateCardPositions();
             return;
         }
+    }
 
-        _selected?.SetSelected(false);
+    void OnCardEntered(BattleSpellCard card)
+    {
         _selected = card;
         _selected.SetSelected(true);
+        UpdateCardPositions();
+    }
+
+    void OnCardExited(BattleSpellCard card)
+    {
+        if (_selected == card)
+        {
+            _selected.SetSelected(false);
+            _selected = null;
+            UpdateCardPositions();
+        }
     }
 
     void UpdateCardPositions()
@@ -86,14 +109,34 @@ public class HandView : MonoBehaviour
 
         float center = (count - 1) * 0.5f;
 
+        int selectedIndex = -1;
+        if (_selected != null)
+            selectedIndex = cardList.IndexOf(_selected);
+
         for (int i = 0; i < count; i++)
         {
-            float x = (i - center) * spacing;
+            bool isSelected = i == selectedIndex;
+            float offsetFromCenter = i - center;
 
-            float y = Mathf.Sqrt(Mathf.Max(0f, radius * radius - x * x)) - radius;
+            float x = offsetFromCenter * _spacing;
+            if (selectedIndex >= 0 && isSelected == false)
+            {
+                int dir = i < selectedIndex ? -1 : 1;
+                x += dir * _spreadOffset;
+            }
 
-            Vector3 localPos = new Vector3(x, y, -depth * i);
-            cardList[i].View.transform.localPosition = localPos;
+            float y = isSelected ? _selectedY : Mathf.Sqrt(Mathf.Max(0f, _radius * _radius - x * x)) - _radius;
+
+            float z = isSelected ? _selectedZ : -_depth * i;
+
+            float scale = isSelected ? _selectedScale : 1f;
+
+            float angle = isSelected ? 0f : -offsetFromCenter * _angleStep;
+
+            Transform cardTransform = cardList[i].View.transform;
+            cardTransform.localPosition = new Vector3(x, y, z);
+            cardTransform.localScale = scale * Vector3.one;
+            cardTransform.localRotation = Quaternion.Euler(0f, 0f, angle);
         }
     }
 }

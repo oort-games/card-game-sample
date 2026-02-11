@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleSceneController : MonoBehaviour
+public class BattleViewController : MonoBehaviour
 {
-    [Header("UI")]
+    [Header("View")]
     [SerializeField] HandView _handView;
-    [SerializeField] RectTransform _deckAnchor;
+    [SerializeField] ManaView _manaView;
 
     BattleContext _context;
 
@@ -20,6 +20,7 @@ public class BattleSceneController : MonoBehaviour
         BindHandUI();
         BindHandPanel();
 
+        _manaView.SetMana(_context.Mana);
         _context.DrawCards(_context.DrawCountPerTurn);
     }
     #endregion
@@ -47,7 +48,8 @@ public class BattleSceneController : MonoBehaviour
     #region Context Event Handlers
     void OnManaChanged()
     {
-       UpdateHandPlayableState();
+        UpdateHandPlayableState();
+        _manaView.SetMana(_context.Mana);
     }
 
     void UpdateHandPlayableState()
@@ -74,7 +76,6 @@ public class BattleSceneController : MonoBehaviour
     void OnCardRemoved(SpellCard card)
     {
         _handView.RemoveCard(card);
-        //_handPanel.RemoveCard(card);
     }
 
     void OnHandChanged()

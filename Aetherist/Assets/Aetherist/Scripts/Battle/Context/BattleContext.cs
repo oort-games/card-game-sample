@@ -35,7 +35,7 @@ public class BattleContext
     #endregion
 
     #region Scene
-    public BattleSceneController SceneController { get; private set; }
+    public BattleViewController SceneController { get; private set; }
     #endregion
 
     #region Event
@@ -75,7 +75,7 @@ public class BattleContext
         Hand = hand;
     }
 
-    public void SetupScene(BattleSceneController sceneController)
+    public void SetupScene(BattleViewController sceneController)
     {
         SceneController = sceneController;
     }

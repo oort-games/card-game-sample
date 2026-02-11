@@ -4,21 +4,23 @@ using UnityEngine;
 public class BattleSpellCard
 {
     public SpellCard Card { get; }
-    public SpellCardView View { get; }
+    public BattleSpellCardView View { get; }
 
     public bool IsSelected { get; private set; }
 
     public event Action<BattleSpellCard> OnClicked;
+    public event Action<BattleSpellCard> OnEntered;
+    public event Action<BattleSpellCard> OnExited;
 
-    public BattleSpellCard(SpellCard card, SpellCardView view)
+    public BattleSpellCard(SpellCard card, BattleSpellCardView view)
     {
         Card = card;
         View = view;
 
         View.Bind(card.Data);
-
-        var input = view.GetComponent<CardInputHandler>();
-        input.OnClick += () => OnClicked?.Invoke(this);
+        View.Input.OnClick += () => OnClicked?.Invoke(this);
+        View.Input.OnEnter += () => OnEntered?.Invoke(this);
+        View.Input.OnExit += () => OnExited?.Invoke(this);
     }
 
     public void SetSelected(bool selected)
