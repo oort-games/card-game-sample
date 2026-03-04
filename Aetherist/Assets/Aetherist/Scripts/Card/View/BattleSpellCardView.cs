@@ -13,6 +13,7 @@ public class BattleSpellCardView : MonoBehaviour
     [SerializeField] Color _unPlayableCostColor = Color.red;
 
     public CardInputHandler Input => _view.Input;
+    public BoxCollider2D Collider => _view.Collider;
 
     public void Bind(SpellCardData data)
     {

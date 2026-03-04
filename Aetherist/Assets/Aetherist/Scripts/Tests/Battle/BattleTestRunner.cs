@@ -46,18 +46,22 @@ public class BattleTestRunner : MonoBehaviour
             targetResolver
             );
 
-        var player = new PlayerTarget(_player);
+        var player = new PlayerUnit(_player);
 
-        var enemies = new List<EnemyTarget>();
+        var enemies = new List<EnemyUnit>();
         foreach (var hp in _enemys)
         {
-            enemies.Add(new EnemyTarget(hp));
+            enemies.Add(new EnemyUnit(hp));
         }
 
         var deck = CreateDeck();
         var hand = new BattleHand();
 
-        _context.SetupBattle(player, enemies, _mana, _maxHandSize, _drawCountPerTurn);
+        _context.SetupBattle(_mana, _maxHandSize, _drawCountPerTurn);
+
+        _context.SetupPlayer(player);
+        _context.SetupEnemy(enemies);
+
         _context.SetupCard(deck, hand);
         _context.SetupScene(_battleViewController);
 

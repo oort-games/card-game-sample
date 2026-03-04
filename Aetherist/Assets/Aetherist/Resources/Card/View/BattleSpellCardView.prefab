@@ -144,6 +144,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8162225340846698227}
     m_Modifications:
+    - target: {fileID: 1161129935260317340, guid: edfb3688ca1df9149ac1c7db94352487, type: 3}
+      propertyPath: m_Size.x
+      value: 3.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1161129935260317340, guid: edfb3688ca1df9149ac1c7db94352487, type: 3}
+      propertyPath: m_Size.y
+      value: 4.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5414200613329193200, guid: edfb3688ca1df9149ac1c7db94352487, type: 3}
       propertyPath: m_Name
       value: SpellCardView

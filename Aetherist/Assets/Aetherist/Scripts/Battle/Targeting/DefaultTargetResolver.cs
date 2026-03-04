@@ -34,7 +34,7 @@ public class DefaultTargetResolver : ITargetResolver
     {
         if (context.Enemies.Count == 0) return Empty();
 
-        EnemyTarget lowest = context.Enemies[0];
+        EnemyUnit lowest = context.Enemies[0];
 
         for (int i = 1; i < context.Enemies.Count; i++)
         {

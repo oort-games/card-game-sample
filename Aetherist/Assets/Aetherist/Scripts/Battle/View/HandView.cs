@@ -23,6 +23,8 @@ public class HandView : MonoBehaviour
     readonly Dictionary<SpellCard, BattleSpellCard> _cards = new();
     BattleSpellCard _selected;
 
+    Coroutine _exitRoutine;
+
     public event Action<SpellCard> OnCardUseRequested;
 
     #region Card
@@ -91,12 +93,35 @@ public class HandView : MonoBehaviour
 
     void OnCardExited(BattleSpellCard card)
     {
+        if (_exitRoutine != null)
+            StopCoroutine(_exitRoutine);
+
+        _exitRoutine = StartCoroutine(ExitGuardCoroutine(card));
+
         if (_selected == card)
         {
             _selected.SetSelected(false);
             _selected = null;
             UpdateCardPositions();
         }
+    }
+
+    IEnumerator ExitGuardCoroutine(BattleSpellCard card)
+    {
+        // 1프레임 기다려서 (레이아웃 이동/스케일 변경/레이캐스트 갱신) 안정화
+        yield return null;
+        yield return null;
+        // 지금도 포인터가 그 카드 위라면 Exit 무효 (움직이면서 튄 Exit)
+        if (card.View.Input.IsPointerInside)
+            yield break;
+
+        // 선택 카드가 바뀌었으면 무효
+        if (_selected != card)
+            yield break;
+
+        card.SetSelected(false);
+        _selected = null;
+        UpdateCardPositions();
     }
 
     void UpdateCardPositions()

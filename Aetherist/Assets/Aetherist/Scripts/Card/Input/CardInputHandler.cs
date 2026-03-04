@@ -8,6 +8,8 @@ public class CardInputHandler : MonoBehaviour, IPointerClickHandler, IPointerEnt
     public event Action OnEnter;
     public event Action OnExit;
 
+    public bool IsPointerInside { get; private set; }
+
     public void OnPointerClick(PointerEventData eventData)
     {
         OnClick?.Invoke();
@@ -15,11 +17,13 @@ public class CardInputHandler : MonoBehaviour, IPointerClickHandler, IPointerEnt
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        IsPointerInside = true;
         OnEnter?.Invoke();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        IsPointerInside = false;
         OnExit?.Invoke();
     }
 }

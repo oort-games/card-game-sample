@@ -15,10 +15,12 @@ public class BattleContext
     #endregion
 
     #region Runtime State
-    public PlayerTarget Player { get; private set; }
+    public PlayerUnit Player { get; private set; }
 
-    readonly List<EnemyTarget> _enemies = new();
-    public IReadOnlyList<EnemyTarget> Enemies => _enemies;
+    readonly List<EnemyUnit> _enemies = new();
+    public IReadOnlyList<EnemyUnit> Enemies => _enemies;
+
+    public BattleTurnState TurnState { get; private set; }
 
     public uint Mana { get; private set; }
 
@@ -55,18 +57,24 @@ public class BattleContext
     }
 
     #region Setup
-    public void SetupBattle(PlayerTarget player, IReadOnlyList<EnemyTarget> enemies,
-        uint mana, uint maxHandSize, uint drawCountPerTurn)
+    public void SetupBattle(uint mana, uint maxHandSize, uint drawCountPerTurn)
     {
-        Player = player;
-        _enemies.Clear();
-        _enemies.AddRange(enemies);
-
         Mana = mana;
         MaxMana = mana;
 
         MaxHandSize = maxHandSize;
         DrawCountPerTurn = drawCountPerTurn;
+    }
+
+    public void SetupPlayer(PlayerUnit player)
+    {
+        Player = player;
+    }
+
+    public void SetupEnemy(IReadOnlyList<EnemyUnit> enemies)
+    {
+        _enemies.Clear();
+        _enemies.AddRange(enemies);
     }
 
     public void SetupCard(BattleDeck deck, BattleHand hand)
@@ -90,7 +98,8 @@ public class BattleContext
     public void UseMana(uint amount)
     {
         var before = Mana;
-        Mana -= amount;
+        Mana = amount >= Mana ? 0 : Mana - amount;
+
         OnManaChanged?.Invoke();
         Debug.Log($"[Mana] Use | {amount} ({before} -> {Mana})");
     }
@@ -126,6 +135,7 @@ public class BattleContext
     }
     #endregion
 
+    #region Card
     public void DrawCards(uint count)
     {
         for (int i = 0; i < count; i++)
@@ -154,6 +164,7 @@ public class BattleContext
         Hand.Remove(card);
         Deck.Discard(card);
     }
+    #endregion
 
     public void CleanupDeadEnemies()
     {
@@ -166,7 +177,7 @@ public class BattleContext
         }
     }
 
-    public void RemoveEnemy(EnemyTarget enemy)
+    public void RemoveEnemy(EnemyUnit enemy)
     {
         _enemies.Remove(enemy);
     }

@@ -12,7 +12,7 @@ public class SpellCardView : MonoBehaviour
     [SerializeField] TMP_Text _costText;
 
     [Header("Collider")]
-    [SerializeField] Collider2D _collider;
+    [SerializeField] BoxCollider2D _collider;
 
     [Header("Input")]
     [SerializeField] CardInputHandler _input;
@@ -21,7 +21,7 @@ public class SpellCardView : MonoBehaviour
     public TMP_Text DescText => _descText;
     public TMP_Text CostText => _costText;
 
-    public Collider2D Collider => _collider;
+    public BoxCollider2D Collider => _collider;
     public CardInputHandler Input => _input;
 
     public void Bind(SpellCardData data)

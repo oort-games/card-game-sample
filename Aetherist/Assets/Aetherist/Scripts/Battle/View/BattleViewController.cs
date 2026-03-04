@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class BattleViewController : MonoBehaviour
 {
+    [SerializeField] BattleFieldView _fieldView;
+
     [Header("View")]
     [SerializeField] HandView _handView;
     [SerializeField] ManaView _manaView;
@@ -20,6 +22,7 @@ public class BattleViewController : MonoBehaviour
         BindHandUI();
         BindHandPanel();
 
+        _fieldView.Spawn(_context);
         _manaView.SetMana(_context.Mana);
         _context.DrawCards(_context.DrawCountPerTurn);
     }
